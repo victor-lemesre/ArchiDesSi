@@ -18,6 +18,7 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
 
     @Inject
     private TemperatureDAO temperatureDao;
+    
     @Inject
     private AddressDao addressDao;
 
@@ -29,7 +30,18 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
 
     @Override
     public List<LocationBean> getLocations() {
-        return locationDao.getLocations();
+        
+        List<LocationBean> results = locationDao.getLocations();
+        
+//        for(LocationBean b : results)
+//        {
+//            //Double lon = addressDao.getAddresses(b.getAddress()).get(0).getGeometry().getCoordinates().get(0);
+//            //Double lat = addressDao.getAddresses(b.getAddress()).get(0).getGeometry().getCoordinates().get(1);
+//            Double lon = 0.6;
+//            Double lat = 55D;
+//            b.setTemperature(temperatureDao.getTemperature(lon, lat));
+//        }
+        return results;
     }
 
     @Override
