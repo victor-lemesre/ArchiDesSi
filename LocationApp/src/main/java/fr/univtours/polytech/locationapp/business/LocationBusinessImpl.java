@@ -39,7 +39,11 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
             Double lat = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
                     .getCoordinates().get(1);
 
-            b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+            if(null != lon && null != lat)
+            {
+                b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+            }
+            
 
         }
         return results;
@@ -56,8 +60,10 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
             Double lat = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
                     .getCoordinates().get(1);
 
-            b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
-
+            if(null != lon && null != lat)
+            {
+                b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+            }
         }
         return results;
     }
@@ -70,7 +76,11 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
                 .getGeometry().getCoordinates().get(0);
         Double lat = addressDao.getAddresses(currentLocation.getAddress() + " " + currentLocation.getZipCode()).get(0)
                 .getGeometry().getCoordinates().get(1);
-        currentLocation.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+        if(null != lon && null != lat)
+        {
+            currentLocation.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+            
+        }
         return currentLocation;
     }
 
