@@ -18,9 +18,11 @@
 					onmouseout="mouseOutLocation(this)">
 					<legend><c:out value="${loc.city}" /> (<c:out value="${loc.zipCode}" />)</legend>
 					<p>${loc.address} - ${loc.city} (${loc.zipCode})<br/><br/><br/>
-					Prix pour une nuit : ${loc.nightPrice} euros</p>
+					Prix pour une nuit : ${loc.nightPrice} euros<br/><br/><br/>
+					Temperature : </p>
 					<p><img src="data:image/jpg;base64,${loc.base64Image}"
 							width="200px" /></p>
+					
 				</fieldset>
 			</form>
 		</c:forEach>

@@ -18,18 +18,18 @@ import fr.univtours.polytech.locationapp.model.LocationBean;
  */
 @WebServlet("/locationsList")
 public class LocationsListServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@EJB
-	private LocationBusinessLocal business;
+    @EJB
+    private LocationBusinessLocal LocationBusiness;
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<LocationBean> locationsList = business.getLocations();
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<LocationBean> locationsList = LocationBusiness.getLocations();
 
-		request.setAttribute("LOCATIONS_LIST", locationsList);
+        request.setAttribute("LOCATIONS_LIST", locationsList);
 
-		request.getRequestDispatcher("locationsList.jsp").forward(request, response);
-	}
+        request.getRequestDispatcher("locationsList.jsp").forward(request, response);
+    }
 }
