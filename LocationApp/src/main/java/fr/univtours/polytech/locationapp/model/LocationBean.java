@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,89 +20,92 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class LocationBean implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private Double nightPrice;
-	private String address;
-	private String city;
-	private String zipCode;
-	@Lob
-	private byte[] picture;
-	private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private Double nightPrice;
+    private String address;
+    private String city;
+    private String zipCode;
+    @Lob
+    private byte[] picture;
+    private static final long serialVersionUID = 1L;
 
-	public LocationBean() {
-		super();
-	}
+    @Transient
+    private Double Temperature;
 
-	public Integer getId() {
-		return this.id;
-	}
+    public LocationBean() {
+        super();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return this.id;
+    }
 
-	public Double getNightPrice() {
-		return this.nightPrice;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setNightPrice(Double nightPrice) {
-		this.nightPrice = nightPrice;
-	}
+    public Double getNightPrice() {
+        return this.nightPrice;
+    }
 
-	public String getAddress() {
-		return this.address;
-	}
+    public void setNightPrice(Double nightPrice) {
+        this.nightPrice = nightPrice;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getAddress() {
+        return this.address;
+    }
 
-	public String getCity() {
-		return this.city;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCity() {
+        return this.city;
+    }
 
-	public String getZipCode() {
-		return this.zipCode;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+    public String getZipCode() {
+        return this.zipCode;
+    }
 
-	public byte[] getPicture() {
-		return this.picture;
-	}
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
-	public void setPicture(byte[] picture) {
-		this.picture = picture;
-	}
+    public byte[] getPicture() {
+        return this.picture;
+    }
 
-	/**
-	 * Transforme le byte[] contenant les donn�es de l'images en String.
-	 * 
-	 * @return La cha�ne de caract�re permettant l'affichage d'une image depuis une
-	 *         JSP.
-	 */
-	public String getBase64Image() {
-		if (null != this.picture && !"".equals(this.picture)) {
-			return Base64.getEncoder().encodeToString(this.picture);
-		} else {
-			return "";
-		}
-	}
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
 
-	public static Comparator<LocationBean> ComparatorCityAlpha = new Comparator<LocationBean>() {
+    /**
+     * Transforme le byte[] contenant les donn�es de l'images en String.
+     * 
+     * @return La cha�ne de caract�re permettant l'affichage d'une image depuis une
+     *         JSP.
+     */
+    public String getBase64Image() {
+        if (null != this.picture && !"".equals(this.picture)) {
+            return Base64.getEncoder().encodeToString(this.picture);
+        } else {
+            return "";
+        }
+    }
 
-		@Override
-		public int compare(LocationBean l1, LocationBean l2) {
-			return l1.getCity().compareTo(l2.getCity());
-		}
-	};
+    public static Comparator<LocationBean> ComparatorCityAlpha = new Comparator<LocationBean>() {
+
+        @Override
+        public int compare(LocationBean l1, LocationBean l2) {
+            return l1.getCity().compareTo(l2.getCity());
+        }
+    };
 
 }
