@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import fr.univtours.polytech.locationapp.dao.AddressDao;
 import fr.univtours.polytech.locationapp.dao.LocationDao;
 import fr.univtours.polytech.locationapp.dao.TemperatureDAO;
 import fr.univtours.polytech.locationapp.model.LocationBean;
@@ -17,11 +18,11 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
 
     @Inject
     private TemperatureDAO temperatureDao;
+    @Inject
+    private AddressDao addressDao;
 
     @Override
     public void addLocation(LocationBean bean) {
-        
- 
         locationDao.createLocation(bean);
         
     }
@@ -38,7 +39,11 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
 
     @Override
     public LocationBean getLocation(Integer id) {
-        return locationDao.getLocation(id);
+        LocationBean currentLocation = locationDao.getLocation(id);;
+        Double lon = addressDao.getAddresses(currentLocation.getAddress()).get(0).getGeometry().getCoordinates().get(0);
+        Double lat = addressDao.getAddresses(currentLocation.getAddress()).get(0).getGeometry().getCoordinates().get(1);
+        currentLocation.setTemperature(temperatureDao.getTemperature(lon, lat));
+        return currentLocation;
     }
 
     @Override
