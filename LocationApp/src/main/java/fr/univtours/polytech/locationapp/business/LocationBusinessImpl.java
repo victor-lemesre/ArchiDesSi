@@ -33,14 +33,19 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
         
         List<LocationBean> results = locationDao.getLocations();
         
-//        for(LocationBean b : results)
-//        {
-//            //Double lon = addressDao.getAddresses(b.getAddress()).get(0).getGeometry().getCoordinates().get(0);
-//            //Double lat = addressDao.getAddresses(b.getAddress()).get(0).getGeometry().getCoordinates().get(1);
-//            Double lon = 0.6;
-//            Double lat = 55D;
-//            b.setTemperature(temperatureDao.getTemperature(lon, lat));
-//        }
+        
+        for(LocationBean b : results)
+        {
+            Double lon = addressDao.getAddresses(b.getAddress() +" " + b.getZipCode()).get(0).getGeometry().getCoordinates().get(0);
+            Double lat = addressDao.getAddresses(b.getAddress()+" " + b.getZipCode()).get(0).getGeometry().getCoordinates().get(1);
+            
+            
+       
+
+            b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+            
+       
+        }
         return results;
     }
 

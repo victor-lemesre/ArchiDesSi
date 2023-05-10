@@ -11,7 +11,7 @@ import fr.univtours.polytech.locationapp.model.weathermap.WsWeatherMapResult;
 @Stateless
 public class TemperatureDAOImpl implements TemperatureDAO {
 
-    private static String URL = "https://api-adresse.data.gouv.fr";
+    private static String URL = "https://api.openweathermap.org/data/2.5/weather";
     private static String key = "2832ed6df19fca6ad3e115a805becf6d";
 
     @Override
@@ -24,7 +24,7 @@ public class TemperatureDAOImpl implements TemperatureDAO {
         target = target.queryParam("lat", latitude);
 
         WsWeatherMapResult wsResult = target.request(MediaType.APPLICATION_JSON).get(WsWeatherMapResult.class);
-        return wsResult.getMain().getTemp();
+        return wsResult.getMain().getTemp() - 273.15;
     }
 
 }
