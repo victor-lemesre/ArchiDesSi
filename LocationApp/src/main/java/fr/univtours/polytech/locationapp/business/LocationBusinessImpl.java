@@ -18,48 +18,59 @@ public class LocationBusinessImpl implements LocationBusinessLocal, LocationBusi
 
     @Inject
     private TemperatureDAO temperatureDao;
-    
+
     @Inject
     private AddressDao addressDao;
 
     @Override
     public void addLocation(LocationBean bean) {
         locationDao.createLocation(bean);
-        
+
     }
 
     @Override
     public List<LocationBean> getLocations() {
-        
+
         List<LocationBean> results = locationDao.getLocations();
-        
-        
-        for(LocationBean b : results)
-        {
-            Double lon = addressDao.getAddresses(b.getAddress() +" " + b.getZipCode()).get(0).getGeometry().getCoordinates().get(0);
-            Double lat = addressDao.getAddresses(b.getAddress()+" " + b.getZipCode()).get(0).getGeometry().getCoordinates().get(1);
-            
-            
-       
+
+        for (LocationBean b : results) {
+            Double lon = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
+                    .getCoordinates().get(0);
+            Double lat = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
+                    .getCoordinates().get(1);
 
             b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
-            
-       
+
         }
         return results;
     }
 
     @Override
     public List<LocationBean> getLocationsFiltre(String Filtre) {
-        return locationDao.getLocationsFiltre(Filtre);
+        
+        List<LocationBean> results = locationDao.getLocationsFiltre(Filtre);;
+
+        for (LocationBean b : results) {
+            Double lon = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
+                    .getCoordinates().get(0);
+            Double lat = addressDao.getAddresses(b.getAddress() + " " + b.getZipCode()).get(0).getGeometry()
+                    .getCoordinates().get(1);
+
+            b.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
+
+        }
+        return results;
     }
 
     @Override
     public LocationBean getLocation(Integer id) {
-        LocationBean currentLocation = locationDao.getLocation(id);;
-        Double lon = addressDao.getAddresses(currentLocation.getAddress()).get(0).getGeometry().getCoordinates().get(0);
-        Double lat = addressDao.getAddresses(currentLocation.getAddress()).get(0).getGeometry().getCoordinates().get(1);
-        currentLocation.setTemperature(temperatureDao.getTemperature(lon, lat));
+        LocationBean currentLocation = locationDao.getLocation(id);
+        ;
+        Double lon = addressDao.getAddresses(currentLocation.getAddress() + " " + currentLocation.getZipCode()).get(0)
+                .getGeometry().getCoordinates().get(0);
+        Double lat = addressDao.getAddresses(currentLocation.getAddress() + " " + currentLocation.getZipCode()).get(0)
+                .getGeometry().getCoordinates().get(1);
+        currentLocation.setTemperature((double) Math.round(temperatureDao.getTemperature(lon, lat)));
         return currentLocation;
     }
 
